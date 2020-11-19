@@ -1,7 +1,7 @@
 ## Description
 The goal of the project is to perform single image super resolution by four times on a mini DIV2K image dataset (500 training and 80 validation pairs of images), and the metric for assessment is PSNR on the test images. 
 
-The script `main.py` is to put alongside the [MMEditing](https://github.com/open-mmlab/mmediting) repo, and implement customized experiments with MMediting image restoration or super resolution. The restoration model used is MSRResnet and default configuration file used is [`msrresnet_x4c64b16_g1_1000k_div2k.py`](https://github.com/open-mmlab/mmediting/blob/master/configs/restorers/srresnet_srgan/msrresnet_x4c64b16_g1_1000k_div2k.py)
+The script `main.py` is to put alongside the [MMEditing](https://github.com/open-mmlab/mmediting) repo, and implement customized experiments with MMediting image restoration or super resolution. The restoration model used is MSRResnet and the configuration file is based on [`msrresnet_x4c64b16_g1_1000k_div2k.py`](https://github.com/open-mmlab/mmediting/blob/master/configs/restorers/srresnet_srgan/msrresnet_x4c64b16_g1_1000k_div2k.py)
 
 The default key parameters are: 
 -	Backbone: MSRResnet of 16 residual blocks ( 1517571 parameters)
@@ -68,5 +68,7 @@ The author used MSRResnet of 20 residual blocks ( 1812995 parameters) for model 
 In MMEditing [doc](https://github.com/open-mmlab/mmediting/tree/master/configs/restorers/srresnet_srgan), the pretrained MSRResnet restorer after 300k iterations gets a test PSNR score of 28.97 evaluated with DIV2K datasets. This is a good indicator of expected PSNR score my model can get, although validation score is usually higher than the test score.
 
 After 100k iterations, with the learning rate policy as cosine restart per 250k, the best validation PSNR is 28.93.
+
+Modified checkpoint and config are provided in current folder.
 
 
