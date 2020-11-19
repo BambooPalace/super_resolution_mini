@@ -1,7 +1,7 @@
 ## Description
 The goal of the project is to perform single image super resolution by four times on a mini DIV2K image dataset (500 training and 80 validation pairs of images), and the metric for assessment is PSNR on the test images. 
 
-The script `main.py` is to put inside the [MMEditing](https://github.com/open-mmlab/mmediting) repo, and implement customized experiments with MMediting image restoration or super resolution. The restoration model used is MSRResnet and default configuration file used is [`msrresnet_x4c64b16_g1_1000k_div2k.py`](https://github.com/open-mmlab/mmediting/blob/master/configs/restorers/srresnet_srgan/msrresnet_x4c64b16_g1_1000k_div2k.py)
+The script `main.py` is to put alongside the [MMEditing](https://github.com/open-mmlab/mmediting) repo, and implement customized experiments with MMediting image restoration or super resolution. The restoration model used is MSRResnet and default configuration file used is [`msrresnet_x4c64b16_g1_1000k_div2k.py`](https://github.com/open-mmlab/mmediting/blob/master/configs/restorers/srresnet_srgan/msrresnet_x4c64b16_g1_1000k_div2k.py)
 
 The default key parameters are: 
 -	Backbone: MSRResnet of 16 residual blocks ( 1517571 parameters)
@@ -13,7 +13,7 @@ The default key parameters are:
 Install requirements of MMEditing following this [intruction](https://github.com/open-mmlab/mmediting/blob/master/docs/install.md) to run this project.
 
 ## Instructions
-git clone the [MMEditing](https://github.com/open-mmlab/mmediting) repo, download `main.py` and save under MMEditing/. Create MMEditing/data/ folder with your datasets. Subfolder structure please refer inside the script `change_config()`.
+- Git clone the [MMEditing](https://github.com/open-mmlab/mmediting) repo, download `main.py` and save in the same folder as MMEditing. 
 
 Specifically, `main.py` make changes to default config file and perform below actions:
 1. Data preparation: modify data path and annotate training images
@@ -59,6 +59,7 @@ User can edit the code to train different restorer models.
 ## Results
 
 The author used MSRResnet of 20 residual blocks ( 1812995 parameters) for model training. 
+
 In MMEditing [doc](https://github.com/open-mmlab/mmediting/tree/master/configs/restorers/srresnet_srgan), the pretrained MSRResnet restorer after 300k iterations gets a test PSNR score of 28.97 evaluated with DIV2K datasets. This is a good indicator of expected PSNR score my model can get, although validation score is usually higher than the test score.
 
 After xxx iterations, validation PSNR is increasing slowly and close to saturation, the best score is xxx.
