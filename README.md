@@ -17,10 +17,10 @@ Install requirements of MMEditing following this [intruction](https://github.com
 
 Specifically, `main.py` make changes to default config file and perform below actions:
 1. Data preparation: modify data path and annotate training images
-2. Change config: change backbone depth, e.g. from 16 residual blocks to 18.
+2. Change config: change backbone depth, e.g. from 16 residual blocks to 20.
 3. Check number of model parameters, default MSRResnet-16 blocks has 1517571 
 4. Training model with customized options, for detailed refer to `Run scripts`
-5. Inference trained model to restore data, model check point is [here](place holder). 
+5. Inference trained model to restore data, trained model in `/checkpoint` folder. 
 
 User can edit the code to train different restorer models.
 
@@ -31,6 +31,11 @@ User can edit the code to train different restorer models.
 - Resume training with customized options
 
 `python main.py --iter=100000 --log_eva_interval=400 --checkpoint_interval=400 --bs=16 --worker=6 --work_dir='./results/b20/' --num_blocks=20 --resume`
+
+- Inference data : Modify config, checkpoint and image path for `fake_gt.py` and  `test.py`. Generate fake 4x scaled HR images with `fake_gt.py` before using the MMediting provided `test.py` to restore custom images.
+
+ 
+ 
 
 **optional arguments:**
   ```buildoutcfg
@@ -62,6 +67,6 @@ The author used MSRResnet of 20 residual blocks ( 1812995 parameters) for model 
 
 In MMEditing [doc](https://github.com/open-mmlab/mmediting/tree/master/configs/restorers/srresnet_srgan), the pretrained MSRResnet restorer after 300k iterations gets a test PSNR score of 28.97 evaluated with DIV2K datasets. This is a good indicator of expected PSNR score my model can get, although validation score is usually higher than the test score.
 
-After xxx iterations, validation PSNR is increasing slowly and close to saturation, the best score is xxx.
+After 100k iterations, with the learning rate policy as cosine restart per 250k, the best validation PSNR is 28.93.
 
 
