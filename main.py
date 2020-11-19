@@ -15,6 +15,7 @@ from mmedit.datasets import build_dataset
 from mmedit.models import build_model
 from mmedit.apis import train_model
 
+
 def parser():
     parser = argparse.ArgumentParser(description='super resolution training for 500 mini DIV2K images')
     parser.add_argument('--resume', action='store_true', help='resume training from checkpoint')
@@ -65,15 +66,12 @@ def change_config(config_path):
     cfg.data.val.gt_folder = './data/Mini-DIV2K/Val/HR/'
 
     # TEST folders #which folder is used for calculating metrics?
-    cfg.data.test.lq_folder = './data/Mini-DIV2K/Val/LR_x4/'
-    cfg.data.test.gt_folder = './data/Mini-DIV2K/Val/HR/'
+    cfg.data.test.lq_folder = './data/test/'
+    cfg.data.test.gt_folder = './data/fake/'
 
-
-    # Use the pre-trained SRCNN model #RESTART
-    # cfg.load_from = checkpoint_srresnet
 
     #Resume from checkpoint
-    if args.resume:
+    if args.resume or args.inference:
         cfg.resume_from = args.work_dir + args.checkpoint
     else:
         cfg.resume_from = None
@@ -98,8 +96,10 @@ def change_config(config_path):
         cfg.lr_config.gamma = 0.5
     else:
         #update lr cosinestart schedule
-        period = 25000#1st 1k iter experiment set args.iter/4
+        period = 300000
         cfg.lr_config.periods = [period,period,period,period]
+        cfg.lr_config.restart_weights = [0.1, 0.1, 0.1, 0.1]
+        cfg.lr_config.min_lr = 1e-06
 
     # Evaluate every 1000 iterations
     cfg.evaluation.interval = args.log_eva_interval
@@ -116,6 +116,8 @@ def change_config(config_path):
     cfg.seed = 0
     set_random_seed(0, deterministic=False)
     cfg.gpus = 1
+
+    cfg.dump('restoration_config.py')
     return cfg
 
 def check_params(cfg):
@@ -138,7 +140,6 @@ def main():
 
     #change config
     config_path = 'configs/restorers/srresnet_srgan/msrresnet_x4c64b16_g1_1000k_div2k.py'
-    # checkpoint_srresnet = './checkpoint/msrresnet_x4c64b16_1x16_300k_div2k_20200521-61556be5.pth'
     cfg = change_config(config_path)
     check_params(cfg)
 
@@ -171,6 +172,8 @@ def main():
 
     # Train the model
     train_model(model, datasets, cfg, distributed=True, validate=True, meta=meta)
+
+
 
 if __name__ == '__main__':
 
