@@ -25,14 +25,19 @@ Specifically, `main.py` make changes to default config file and perform below ac
 User can edit the code to train different restorer models.
 
 **Examples**
+- git clone mmediting, and set current folder as mmediting `cd mmediting`
+
 - Train model for the 1st time. 1st time should use '--annotate' to produce annotation file
 
-`python main.py --iter=8000 --log_eva_interval=400 --checkpoint_interval=400 --bs=16 --worker=6 --annotate`
+`python ../main.py --iter=8000 --log_eva_interval=400 --checkpoint_interval=400 --bs=16 --worker=6 --annotate`
 - Resume training with customized options
 
-`python main.py --iter=100000 --log_eva_interval=400 --checkpoint_interval=400 --bs=16 --worker=6 --work_dir='./results/b20/' --num_blocks=20 --resume`
+`python ../main.py --iter=100000 --log_eva_interval=400 --checkpoint_interval=400 --bs=16 --worker=6 --work_dir='./results/b20/' --num_blocks=20 --resume`
 
-- Inference data : Modify config, checkpoint and image path for `fake_gt.py` and  `test.py`. Generate fake 4x scaled HR images with `fake_gt.py` before using the MMediting provided `test.py` to restore custom images.
+- Inference data : Modify config, checkpoint and image path for `fake_gt.py` and  `test.py` beforeing running scripts. 
+
+Generate fake 4x scaled HR images with `../python fake_gt.py` 
+Restore test images with `../python test.py`
 
  
  
